@@ -54,3 +54,13 @@ scrape_configs:
         target_label:  '__path__'
         replacement: '/opt/nomad/data/alloc/$1/alloc/logs/*std*.{?,??}'
 {% endif %}
+
+{% if promtail_sre_target_config != {} %}
+{% if inventory_hostname in groups['hashistack_sre'] %}
+  {{ promtail_sre_target_config | to_nice_yaml(indent=2,sort_keys=False) | indent(2) }}
+{% endif %}
+{% endif %}
+
+{% if promtail_target_config != {} %}
+{{ promtail_target_config | to_nice_yaml(indent=2,sort_keys=False) | indent(2)}}
+{% endif %}
